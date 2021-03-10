@@ -1,0 +1,20 @@
+{
+  "myacc_map":{
+  "erich.ej.best@me.com": {
+    "access": "AKIA56GTQVIWL4DVFFFU",
+    "secret": "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"
+  },
+  "erich@bronzedrum.com": {
+    "access": "AKIAVI7DAWXF6PLOUFGN",
+    "secret": "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"
+  },
+  "ejbest@alumni.rutgers.edu": {
+    "access": "AKIAVBINT6IXWUDLKBUC",
+    "secret": "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"
+  },
+  "erich.ej.best.fl@gmail.com": {
+    "access": "AKIA2OTKR7D4SZ2OR6JX",
+    "secret": "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"
+  }
+}
+}

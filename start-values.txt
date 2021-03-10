@@ -1,0 +1,11 @@
+
+
+
+
+email                       last    to date   forcast 
+erich.ej.best.fl@gmail.com  100.99      38     126.8
+ejbest@alumni.rutgers.edu   1.52        .78    2.25
+erich.ej.best@me.com         0           0       0
+erich@bronzedrum.com         0          .21     .37
+
+

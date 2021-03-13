@@ -3,11 +3,24 @@ import datetime
 import dateutil.relativedelta
 import pandas  as pd
 import json
+import ast
 
 
 def last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)
     return next_month - datetime.timedelta(days=next_month.day)
+
+def get_secret(sec_name,region):
+    secret_name = sec_name
+    region_name = region
+    session = boto3.session.Session()
+    client = session.client(service_name='secretsmanager', region_name=region_name)
+    try:
+        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+        return get_secret_value_response['SecretString']
+    except Exception as e:
+        raise e
+
 
 # get today's date
 today = datetime.datetime.today()
@@ -26,15 +39,16 @@ last_month_day_ed = str(last_day_of_month(last_month))[:10]
 
 # get next month date
 next_month_ = today + dateutil.relativedelta.relativedelta(months=1)
+next2_month_= today + dateutil.relativedelta.relativedelta(months=2)
 next_month_year = next_month_.year
 next_month_month = '{:02}'.format(next_month_.month)
 next_month_day_st = f"{next_month_year}-{next_month_month}-01"
-next_month_day_ed = str(last_day_of_month(next_month_))[:10]
+next2_month_year = next2_month_.year
+next2_month_month = '{:02}'.format(next2_month_.month)
+next_month_day_ed = f"{next2_month_year}-{next2_month_month}-01"
 
-# replace the map
-FILE_PATH = "cred.json"
-with open(FILE_PATH) as fp:
-    myacc_map = json.load(fp)['myacc_map']
+myacc_map= get_secret(sec_name='mybilling',region='us-east-1')
+myacc_map = ast.literal_eval(myacc_map)['myacc_map']
 
 account = []
 email = []
@@ -56,7 +70,7 @@ for each in myacc_map.keys():
         last_month_cost=0
     # forecast
     try:
-        response_f = client.get_cost_forecast(TimePeriod={'Start': next_month_day_st, 'End': next_month_day_ed }, Granularity='DAILY',Metric='UNBLENDED_COST')
+        response_f = client.get_cost_forecast(TimePeriod={'Start': next_month_day_st, 'End': next_month_day_ed}, Granularity='MONTHLY',Metric='NET_UNBLENDED_COST')
         next_month_cost = sum([float(each['MeanValue']) for each in response_f['ForecastResultsByTime'] ])
     except Exception as e:
         next_month_cost=0

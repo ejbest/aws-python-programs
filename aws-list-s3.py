@@ -9,6 +9,13 @@ import boto3
 #  Invoke........python3 aws-list-s3.py                                                 #
 #                                                                                       #
 #########################################################################################
+acc = 'AKIAZRKQM63VMIQ6I3GL'
+sec='MeJP1pfgckH5XHECsTDT3P7bVw1Oq8086+W9eqvZ'
+
+account_id = "655688005354"
+region = 'eu-central-1'
+job_name = 'test_macie'
+
 
 class myList:
     def GetRegions(self):
@@ -24,21 +31,30 @@ class myList:
         return RegionList
 
     def ListEc2Instance(self):
-        FetchRegionList=[]
-        FetchRegionList=self.GetRegions()
-        for Region in range(len(FetchRegionList)):
-            print ("Region : --> {}".format(FetchRegionList[Region]))
-           
-            # fetch all buckets
-            s3 = boto3.client('s3', region_name=FetchRegionList[Region])
-            s3_resp = s3.list_buckets()
-            if len(s3_resp['Buckets'])!=0:
-                for each in s3_resp['Buckets']:
-                    print("S3 --> BucketName : {}. CreationDate: {}".format(each['Name'],each['CreationDate']))
-            else:
-                print("No S3 bucket present in this Region")
-                
+        FetchRegionList = self.GetRegions()
+
+        s3 = boto3.client('s3')
+        s3_resp = s3.list_buckets()
+        ExceptList = []
+        regional_buckets = { each : [] for each in FetchRegionList}
+        for idx,bucket in enumerate(s3_resp["Buckets"]):
+            try:
+                loc = s3.head_bucket(Bucket=bucket['Name'])['ResponseMetadata']['HTTPHeaders']['x-amz-bucket-region']
+                regional_buckets[loc].append(bucket)
+            except Exception as e:
+                ExceptList.append(bucket["Name"])
+        for key, val in regional_buckets.items():
+            print("Region: {}".format(key))
+            for each in val:
+                print("S3 Bucket --> Name: {}  CreationDate :{}  Ownerid : {}".format(each['Name'],each['CreationDate'],s3_resp['Owner']['ID']))
+            print("--------------------------------------------------------------------")
+        if (len(ExceptList)):
+            print("Following bucket region couldnt be extracted :")
+            for each in ExceptList:
+                print("S3 Bucket --> Name: {}",format(each))
+
 
 if __name__ == '__main__':
     RunQuery = myList()
     RunQuery.ListEc2Instance()
+

@@ -1,10 +1,12 @@
 import boto3
 #########################################################################################
-#https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elbv2.html  #
+# aws-list-services.py                                                                  #
 #                                                                                       #
-# aws-list-services                                                                     #
-#                                                                                       #
-# List VpC, Instances,LaodBalancer, Lambda Security Groups , ECS, EKS                   #
+#  Function......List VpC, Instances,LaodBalancer, Lambda Security Groups , ECS, EKS    #
+#  Requires......https://aws.amazon.com/sdk-for-python/                                 #
+#  Released......March 11, 2021                                                         #
+#  Scripter......ej.best@virtualclarity.com                                             #
+#  Invoke........python3 aws-list-services.py                                           #
 #                                                                                       #
 #########################################################################################
 
@@ -18,14 +20,13 @@ class myList:
         print("Number of Regions {}".format(len(RegionList)))
         print("Regions::")
         print (RegionList)
-        
+        print("**********************************")
         return RegionList
 
     def ListEc2Instance(self):
         FetchRegionList=[]
         FetchRegionList=self.GetRegions()
         for Region in range(len(FetchRegionList)):
-            print("**********************************")
             print ("Region : --> {}".format(FetchRegionList[Region]))
             #Find all VPC in a Region
             Ec2 = boto3.client('ec2', region_name=FetchRegionList[Region])
@@ -42,7 +43,7 @@ class myList:
                     InstState=GetInstance['Reservations'][InstanceCount]['Instances'][0]['State']['Name']
                     print ("EC2 Instance --> id : {}. InstanceType: {}. Status : {}.".format(InstID,InstType,InstState))
             else:
-                print ("No Ec2 Instance(s) running in Region.")
+                print ("No EC2 Instance(s) running in Region.")
 
             #Find all volumes used in Region:
             GetVolume = Ec2.describe_volumes()
@@ -118,10 +119,17 @@ class myList:
             else:
                 print("No EKS Cluster(s) running in Region.")
 
+            # # fetch all buckets
+            # s3 = boto3.client('s3', region_name=FetchRegionList[Region])
+            # s3_resp = s3.list_buckets()
+            # if len(s3_resp['Buckets'])!=0:
+            #     for each in s3_resp['Buckets']:
+            #         print("S3 --> BucketName : {}. CreationDate: {}".format(each['Name'],each['CreationDate']))
+            # else:
+            #     print("No S3 bucket present in this Region")
+                
+        print("**********************************")
         # Fetch domain
-        print("**********************************")
-        print("** Route 53 Global Service *******")
-        print("**********************************")
         client = boto3.client('route53domains')
         response = client.list_domains()
         if len(response['Domains'])!=0:
@@ -129,8 +137,7 @@ class myList:
                 print("Route 53 --> DomainName : {}. AutoRenewEnabled? : {}. ExpiryDate : {}.".format(each['DomainName'], each['AutoRenew'], each['Expiry']))
         else:
             print("No DNS Record found")
-
-            print("**********************************")
+        print("**********************************")
 
 
 if __name__ == '__main__':

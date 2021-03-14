@@ -1,4 +1,14 @@
 import boto3
+#########################################################################################
+# insert_secret.py                                                                      #
+#                                                                                       #
+#  Function......Setups up a secret called "mybilling" fill in each by your email root  #
+#  Requires......https://aws.amazon.com/sdk-for-python/                                 #
+#  Released......March 11, 2021                                                         #
+#  Scripter......                                                                       #
+#  Invoke........python3 aws-list-services.py                                           #
+#                                                                                       #
+#########################################################################################
 region = 'us-east-1'
 #
 # You need to haave a key and secret for each environment

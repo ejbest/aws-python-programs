@@ -5,7 +5,7 @@ import boto3
 #  Function......List VpC, Instances,LaodBalancer, Lambda Security Groups , ECS, EKS    #
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 11, 2021                                                         #
-#  Scripter......ej.best@virtualclarity.com                                             #
+#  Scripter......                                                                       #
 #  Invoke........python3 aws-list-services.py                                           #
 #                                                                                       #
 #########################################################################################
@@ -27,12 +27,24 @@ class myList:
         FetchRegionList=[]
         FetchRegionList=self.GetRegions()
         for Region in range(len(FetchRegionList)):
+            print("**********************************")
             print ("Region : --> {}".format(FetchRegionList[Region]))
             #Find all VPC in a Region
             Ec2 = boto3.client('ec2', region_name=FetchRegionList[Region])
             vpcs = Ec2.describe_vpcs()
             for vpc in vpcs['Vpcs']:
                 print("VPC --> VPCId : {}. CidrBlock : {}. DefaultVPC? : {}. ".format(vpc['VpcId'],vpc['CidrBlock'],vpc['IsDefault']))
+
+            #Fetch security groups used in Region
+            GetSecurityGroup = Ec2.describe_security_groups()
+            if len(GetSecurityGroup['SecurityGroups']) !=0:
+                for SecurityGroupCount in range(len(GetSecurityGroup['SecurityGroups'])):
+                    GroupId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupId']
+                    VpcId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['VpcId']
+                    GroupName = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupName']
+                    print ("Security --> Groupid : {}. VpcId : {}. GroupName : {}.".format(GroupId,VpcId,GroupName))
+            else:
+                print ("No security group available for this region.")
 
             #Find all Ec2 instance in Region.
             GetInstance = Ec2.describe_instances()
@@ -85,16 +97,16 @@ class myList:
                 print ("No Lambda function available in Region.")
 
 
-            #Fetch security groups used in Region
-            GetSecurityGroup = Ec2.describe_security_groups()
-            if len(GetSecurityGroup['SecurityGroups']) !=0:
-                for SecurityGroupCount in range(len(GetSecurityGroup['SecurityGroups'])):
-                    GroupId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupId']
-                    VpcId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['VpcId']
-                    GroupName = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupName']
-                    print ("Security --> Groupid : {}. VpcId : {}. GroupName : {}.".format(GroupId,VpcId,GroupName))
-            else:
-                print ("No security group available for this region.")
+            # #Fetch security groups used in Region
+            # GetSecurityGroup = Ec2.describe_security_groups()
+            # if len(GetSecurityGroup['SecurityGroups']) !=0:
+            #     for SecurityGroupCount in range(len(GetSecurityGroup['SecurityGroups'])):
+            #         GroupId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupId']
+            #         VpcId = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['VpcId']
+            #         GroupName = GetSecurityGroup['SecurityGroups'][SecurityGroupCount]['GroupName']
+            #         print ("Security --> Groupid : {}. VpcId : {}. GroupName : {}.".format(GroupId,VpcId,GroupName))
+            # else:
+            #     print ("No security group available for this region.")
 
             #Fetch ecs
             ecs = boto3.client('ecs',region_name=FetchRegionList[Region])

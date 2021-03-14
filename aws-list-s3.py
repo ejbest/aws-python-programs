@@ -5,7 +5,7 @@ import boto3
 #  Function......List s3 buckets indivdually and list regions beside eash               #
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 11, 2021                                                         #
-#  Scripter......TBD                                                                    #
+#  Scripter......                                                                       #
 #  Invoke........python3 aws-list-s3.py                                                 #
 #                                                                                       #
 #########################################################################################

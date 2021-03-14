@@ -4,7 +4,17 @@ import dateutil.relativedelta
 import pandas  as pd
 import json
 import ast
-
+#########################################################################################
+# billing.py                                                                            #
+#                                                                                       #
+#  Function......Git Bill Details from ~/.aws/credentials with other commented keys     #
+#  Secrets.......https://github.com/ejbest/aws-python-utils/blob/main/insert_secret.py  #
+#  Requires......https://aws.amazon.com/sdk-for-python/                                 #
+#  Released......March 11, 2021                                                         #
+#  Scripter......                                                                       #
+#  Invoke........python3 aws-list-services.py                                           #
+#                                                                                       #
+#########################################################################################
 
 def last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)

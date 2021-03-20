@@ -1,0 +1,30 @@
+Resources:
+  BILLINGUSER:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: giveaccesstobillingonly
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - ce:*
+              - sts:*
+              Resource: '*'
+      UserName: 'ce'
+
+  myaccesskey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName:
+        !Ref BILLINGUSER
+
+
+Outputs:
+  AccessKeyformyaccesskey:
+    Value:
+      !Ref myaccesskey
+  SecretKeyformyaccesskey:
+    Value: !GetAtt myaccesskey.SecretAccessKey
+

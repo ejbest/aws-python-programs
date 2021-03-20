@@ -1,14 +1,15 @@
 import boto3
 import re
+import time
 
 file_path = "/Users/ej/.aws/credentials"
 # to test the code change the re_write_path
 re_write_path = file_path
 
 
-def update_secret(secret):
+def update_secret(secret, cred):
     session = boto3.session.Session()
-    sm = session.client(service_name='secretsmanager')
+    sm = session.client(service_name='secretsmanager', region_name="us-east-1", aws_access_key_id=cred['access'], aws_secret_access_key=cred['secret'])
     response = sm.update_secret(
         SecretId='mybilling',
         SecretString=str(secret)
@@ -86,13 +87,12 @@ for idx, each in enumerate(dic):
     cred = {email[idx]:{"access":access,"secret":secret}}
     secret_dic['myacc_map'].update(cred)
 
-
 new_cred = new_cred.format(*format_list)
 
 #   write to aws/cred path
 with open(re_write_path,"w") as fp:
     fp.write(new_cred)
 
+time.sleep(10)
 # write to secrets manager
-update_secret(secret_dic)
-
+update_secret(secret=secret_dic, cred=secret_dic['myacc_map']['erich@bronzedrum.com'])

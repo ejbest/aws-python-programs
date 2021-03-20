@@ -15,6 +15,7 @@ region = 'us-east-1'
 # 
 dic = {
   "myacc_map":{
+<<<<<<< HEAD
 	'erich.ej.best@me.com': {
 		'access': 'AKIA56GTQVIWL4DVFFFU', 
 		'secret': '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'
@@ -31,6 +32,26 @@ dic = {
 
   }
 }
+=======
+  "email1@me.com": {
+    "access": " ",
+    "secret": " "
+  },
+  "eamil2@mail.com": {
+    "access": " ",
+    "secret": " "
+  },
+  "email3@yahoo.com": {
+    "access": " ",
+    "secret": " "
+  },
+  "email4@gmail.com": {
+    "access": " ",
+    "secret": " "
+  }
+}
+}
+>>>>>>> 7e77aa7959122eec101550b2cf28cebf0d661439
 client = boto3.client('secretsmanager')
 response = client.create_secret(
     Name='mybilling',

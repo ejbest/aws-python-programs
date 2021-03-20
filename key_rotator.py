@@ -18,17 +18,22 @@ def update_secret(secret):
 
 def rotate_key(old_acc,old_sec):
     iam = boto3.client('iam',aws_access_key_id=old_acc, aws_secret_access_key=old_sec)
+    response = iam.list_access_keys()
+    if len(response['AccessKeyMetadata']) > 1:
+        del_ak = [each['AccessKeyId'] for each in response['AccessKeyMetadata'] if each['AccessKeyId'] != old_acc][0]
+        delete_access_key(iam=iam, access_key=del_ak)
     # create a new access key
     response = iam.create_access_key()
     if response['AccessKey']['Status'] == 'Active':
         new_Acc = response['AccessKey']['AccessKeyId']
         new_Sec = response['AccessKey']['SecretAccessKey']
-        del_response = iam.delete_access_key(
-            AccessKeyId=old_acc
-        )
-        if del_response['ResponseMetadata']['HTTPStatusCode']==200:
-            print("Successfully rotated keys")
-            return new_Acc,new_Sec
+        return new_Acc,new_Sec
+
+
+def delete_access_key(iam,access_key):
+    del_response = iam.delete_access_key(AccessKeyId=access_key)
+    if del_response['ResponseMetadata']['HTTPStatusCode'] == 200:
+        print("Successfully deleted the key")
 
 
 # use this to test
@@ -74,8 +79,8 @@ with open(file_path) as fp:
 format_list = []
 secret_dic = {"myacc_map":{}}
 # rotation 
-for idx,each in enumerate(dic):
-    access,secret = rotate_key(each['acc'],each['sec'])
+for idx, each in enumerate(dic):
+    access,secret = rotate_key(each['acc'], each['sec'])
     format_list.append(access)
     format_list.append(secret)
     cred = {email[idx]:{"access":access,"secret":secret}}

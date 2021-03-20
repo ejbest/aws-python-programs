@@ -235,7 +235,7 @@ class myList:
                                    each['ClusterIdentifier']))
             else:
                 if NoResLog:
-                    print("No redshift cluster found in Region.")
+                    print("No Redshift cluster found in Region.")
 
             print("**********************************")
 

@@ -224,6 +224,19 @@ class myList:
                 if NoResLog:
                     print("No RDS cluster found in Region.")
 
+            # fetch redshift clusters
+            redshift = boto3.client('redshift', region_name=FetchRegionList[Region])
+            response = redshift.describe_clusters()
+            if len(response['Clusters']) != 0:
+                for each in response['Clusters']:
+                    print(
+                        "RDS --> DBName : {}. NodeType : {} . ClusterStatus : {} . ClusterIdentifier : {}".
+                            format(each['DBName'], each['NodeType'], each['ClusterStatus'],
+                                   each['ClusterIdentifier']))
+            else:
+                if NoResLog:
+                    print("No redshift cluster found in Region.")
+
             print("**********************************")
 
 

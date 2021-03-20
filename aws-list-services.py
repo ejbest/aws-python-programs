@@ -163,11 +163,11 @@ class myList:
                     print("No EKS Cluster(s) running in Region.")
 
             # fetch sns topics
-            sns = boto3.client('sns')
+            sns = boto3.client('sns',region_name=FetchRegionList[Region])
             response = sns.list_topics()
             if len(response['Topics'])!=0:
                 for each in response['Topics']:
-                    topic_det = client.get_topic_attributes(
+                    topic_det = sns.get_topic_attributes(
                         TopicArn=each['TopicArn']
                     )
                     print("SNS --> TopicDisplayName : {}. TopicArn : {}. SubscriptionsConfirmed : {}.".format(
@@ -177,7 +177,7 @@ class myList:
                     print("No SNS topics found in Region.")
 
             # fetch dynamodb tables
-            ddy = boto3.client('dynamodb')
+            ddy = boto3.client('dynamodb',region_name=FetchRegionList[Region])
             response = ddy.list_tables()
             if len(response['TableNames'])!=0:
                 for each in response['TableNames']:
@@ -188,9 +188,9 @@ class myList:
                     print("No DynamoDB table found in Region.")
 
             # fetch sqs
-            sqs = boto3.client('sqs')
+            sqs = boto3.client('sqs', region_name=FetchRegionList[Region])
             response = sqs.list_queues()
-            if len(response['QueueUrls']) != 0:
+            if "QueueUrls" in response:
                 for each in response['QueueUrls']:
                     print("SQS --> QueueUrl : {} .".format(
                         each))
@@ -199,7 +199,7 @@ class myList:
                     print("No SQS queue found in Region.")
 
             # fetch running emr
-            emr = boto3.client('emr')
+            emr = boto3.client('emr', region_name=FetchRegionList[Region])
             response = emr.list_clusters(
                 ClusterStates=['STARTING','BOOTSTRAPPING','RUNNING','WAITING','TERMINATING','TERMINATED','TERMINATED_WITH_ERRORS' ],
             )

@@ -211,6 +211,19 @@ class myList:
                 if NoResLog:
                     print("No EMR cluster found in Region.")
 
+            # fetch rds
+            rds = boto3.client('rds', region_name=FetchRegionList[Region])
+            response = rds.describe_db_instances()
+            if len(response['DBInstances']) != 0:
+                for each in response['DBInstances']:
+                    print(
+                        "RDS --> DBName : {}. DBInstanceClass : {} . DBInstanceStatus : {} . DBInstanceIdentifier : {}".
+                        format(each['DBName'], each['DBInstanceClass'], each['DBInstanceStatus'],
+                               each['DBInstanceIdentifier']))
+            else:
+                if NoResLog:
+                    print("No RDS cluster found in Region.")
+
             print("**********************************")
 
 

@@ -1,6 +1,6 @@
 import json
 
-def myfunction(event, context):
+def ej-lambda(event, context):
     # TODO implement
     return {
         'statusCode': 200,

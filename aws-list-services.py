@@ -5,7 +5,8 @@ import argparse
 # aws-list-services.py                                                                  #
 #                                                                                       #
 #  Function......Lists the following                                                    #                
-#       VPC,EC2,Loadbalancer,LambdaSecurityGrps,ECS,EKS,SNS,Dynamo,EMR,RDS,Redshift     #
+#       VPC,EC2,Loadbalancer,LambdaSecurityGroups,ECS,EKS,SNS,Dynamo,                   #
+#       EMR,RDS,Redshift,Elastic                                                        #
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 16, 2021                                                         #
 #  Scripter......                                                                       #
@@ -15,7 +16,8 @@ import argparse
 #                                                                                       #
 # Parameters                                                                            #
 # python3 aws-list-services.py -r us-east-1                                             #
-# python3 aws-list-services.py --verbose=false                                          #
+# python3 aws-list-services.py -v non-verbose                                           #
+# python3 aws-list-services.py -v non-verbose   -r us-east-1                            #
 #                                                                                       #      
 #########################################################################################
 

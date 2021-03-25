@@ -237,6 +237,15 @@ class myList:
                 if NoResLog:
                     print("No Redshift cluster found in Region.")
 
+            # fetch elasicip
+            response = Ec2.describe_addresses()
+            if len(response['Addresses']) != 0:
+                for each in response['Addresses']:
+                    print("ElasicIP --> EIP : {}.".format(each['PublicIp']))
+            else:
+                if NoResLog:
+                    print("No Elastic IP found in Region.")
+
             print("**********************************")
 
 

@@ -4,12 +4,19 @@ import argparse
 #########################################################################################
 # aws-list-services.py                                                                  #
 #                                                                                       #
-#  Function......List VpC, Instances,LaodBalancer, Lambda Security Groups, ECS, EKS     #
+#  Function......Lists the following                                                    #                
+#       VPC,EC2,Loadbalancer,LambdaSecurityGrps,ECS,EKS,SNS,Dynamo,EMR,RDS,Redshift     #
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 16, 2021                                                         #
-#  Scripter......                                             #
+#  Scripter......                                                                       #
 #  Invoke........python3 aws-list-services.py                                           #
 #                                                                                       #
+#########################################################################################
+#                                                                                       #
+# Parameters                                                                            #
+# python3 aws-list-services.py -r us-east-1                                             #
+# python3 aws-list-services.py --verbose=false                                          #
+#                                                                                       #      
 #########################################################################################
 
 class myList:

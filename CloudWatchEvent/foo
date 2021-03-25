@@ -4,9 +4,9 @@
 ||                           Role                           ||
 |+------------+---------------------------------------------+|
 ||  Arn       |  arn:aws:iam::362863965643:role/ej_lambda   ||
-||  CreateDate|  2021-03-21T15:36:17+00:00                  ||
+||  CreateDate|  2021-03-21T22:49:58+00:00                  ||
 ||  Path      |  /                                          ||
-||  RoleId    |  AROAVI7DAWXF6JHFLMAGR                      ||
+||  RoleId    |  AROAVI7DAWXFUPYJOJP4Q                      ||
 ||  RoleName  |  ej_lambda                                  ||
 |+------------+---------------------------------------------+|
 |||                AssumeRolePolicyDocument                |||

@@ -6,7 +6,7 @@ import argparse
 #                                                                                       #
 #  Function......Lists the following                                                    #                
 #       VPC,EC2,Loadbalancer,LambdaSecurityGroups,ECS,EKS,SNS,Dynamo,                   #
-#       EMR,RDS,Redshift,Elastic                                                        #
+#       EMR,RDS,Redshift,ElasticIP                                                       #
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 16, 2021                                                         #
 #  Scripter......                                                                       #
@@ -14,7 +14,7 @@ import argparse
 #                                                                                       #
 #########################################################################################
 #                                                                                       #
-# Parameters                                                                            #
+# Parameters -r and -v                                                                  #
 # python3 aws-list-services.py -r us-east-1                                             #
 # python3 aws-list-services.py -v non-verbose                                           #
 # python3 aws-list-services.py -v non-verbose   -r us-east-1                            #
@@ -246,7 +246,7 @@ class myList:
                 if NoResLog:
                     print("No Redshift cluster found in Region.")
 
-            # fetch elasicip
+            # fetch elasticip
             response = Ec2.describe_addresses()
             if len(response['Addresses']) != 0:
                 for each in response['Addresses']:

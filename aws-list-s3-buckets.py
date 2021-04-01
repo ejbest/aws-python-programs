@@ -9,8 +9,7 @@ import boto3
 #  Invoke........python3 aws-list-s3.py                                                 #
 #                                                                                       #
 #########################################################################################
-
-
+# tested
 
 class myList:
     def GetRegions(self):

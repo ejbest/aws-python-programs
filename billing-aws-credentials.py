@@ -12,7 +12,7 @@ import ast
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 11, 2021                                                         #
 #  Scripter......                                                                       #
-#  Invoke........python3 aws-list-services.py                                           #
+#  Invoke........python3 billing-aws-credentials.py                                           #
 #                                                                                       #
 #########################################################################################
 

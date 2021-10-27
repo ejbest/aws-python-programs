@@ -13,7 +13,7 @@ import os
 #  Requires......https://aws.amazon.com/sdk-for-python/                                 #
 #  Released......March 11, 2021                                                         #
 #  Scripter......                                                                       #
-#  Invoke........python3 billing-aws-credentials.py                                     #
+#  Invoke........python3 billing-aws-credentials.py                                           #
 #                                                                                       #
 #########################################################################################
 
@@ -75,6 +75,9 @@ for profile in data["accounts"]:
         next_month_cost = sum([float(each['MeanValue']) for each in response_f['ForecastResultsByTime'] ])
     except Exception as e:
         next_month_cost=0
+    this_month_cost="{:.2f}".format(this_month_cost)
+    last_month_cost="{:.2f}".format(last_month_cost)
+    next_month_cost="{:.2f}".format(next_month_cost)
     #client = boto3.client("sts")
     client = boto3.client('sts',aws_access_key_id=profile['access_key'],aws_secret_access_key=profile['secret'])
     account_id = client.get_caller_identity()["Account"]

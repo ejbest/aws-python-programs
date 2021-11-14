@@ -1,5 +1,5 @@
 account_id    email                       previous  current  forecast
-346310308399  ejbest@alumni.rutgers.edu   2.02      1.42     0.00    
-958221298220  erich.ej.best@me.com        3.82      3.20     3.47    
-718556756217  erich.ej.best.fl@gmail.com  1.70      1.41     0.00    
-362863965643  erich@bronzedrum.com        4.54      3.08     4.55    
+346310308399  ejbest@alumni.rutgers.edu   2.02      1.63     0.00    
+958221298220  erich.ej.best@me.com        3.82      3.69     3.47    
+718556756217  erich.ej.best.fl@gmail.com  1.70      1.65     0.00    
+362863965643  erich@bronzedrum.com        4.54      4.10     4.55    

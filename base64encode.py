@@ -1,6 +1,6 @@
 import sys
 import base64
-
+#
 sInputFileName	= sys.argv[1]
 sOutputFileName	= sys.argv[2]
 
